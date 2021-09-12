@@ -17,7 +17,11 @@ The author.dat file has stored author information including authorID and name(au
 
 3. Update book
 
-4. Delete book
+4. Delete 
+
+ * Delete book
+
+ * Delete author
 
 5. Search book
 
@@ -35,5 +39,7 @@ The author.dat file has stored author information including authorID and name(au
 
 <p>Each book has the properties such that ISBN, title, price and authorID.</p>
 <p>Each author has some information: authorID, name.</p>
+
+For more information see 2 PDFs ☝️ ☝️
 
 Ask for me **thanhminh1452000@gmail.com** or [Facebook](https://www.facebook.com/thanhmin145/)

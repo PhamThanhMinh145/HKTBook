@@ -12,7 +12,7 @@ public class BookManagement {
         menu.addOption("1.Show the book list");
         menu.addOption("2.Add new book");
         menu.addOption("3.Update book");
-        menu.addOption("4.Delete book");
+        menu.addOption("4.Delete");
         menu.addOption("5.Search book");
         menu.addOption("6.Store data to file");
         menu.addOption("7.Add Author");
@@ -43,7 +43,7 @@ public class BookManagement {
                     change = true;
                     break;
                 case 4:
-                    book.removeABook();
+                    book.delete();
                     change = true;
                     break;
                 case 5:

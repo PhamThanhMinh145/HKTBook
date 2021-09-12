@@ -223,6 +223,18 @@ public class BookControl {
         }
         return null;
     }
+    
+    public Book checkBookByAuthor(String authID) {
+        if (bookList.isEmpty()) {
+            return null;
+        }
+        for (int i = 0; i < bookList.size(); i++) {
+            if (bookList.get(i).getAuthorID().equalsIgnoreCase(authID)) {
+                return bookList.get(i);
+            }
+        }
+        return null;
+    }
 
     public void updateBook() {
         String ISBN, title, authID, s;
@@ -299,7 +311,7 @@ public class BookControl {
         } while (s.equalsIgnoreCase("Y"));
 
     }
-
+    
     public void removeABook() {
         String ISBN, s, confirm;
         Book b;
@@ -329,33 +341,38 @@ public class BookControl {
 
     public void removeAuthorID() {
         String auID, s, confirm;
-        // Author a;
-        do {
-            auID = CheckValidation.getStringNoFormat("Input authorID to remove: ", "Author id is required");
-            confirm = CheckValidation.getString("Do you wanna remove this author (Y/N)",
-                    "Input is required", "[Y-y|N-n]{1}");
-            if (confirm.equalsIgnoreCase("Y")) {
-                for (Author a : authorList) {
-                    if (a.getAuthorID().contains(auID)) {
-                        for (Book b : bookList) {
-                            if (a.getAuthorID().contains(b.getAuthorID())) {
-                                System.out.println("This author has a book in the store, you cannot delete this author");
-                            }
-                        }
-                    } else {
+         Author a;
+         Book b;
+          do {
+            auID = CheckValidation.getStringNoFormat("Input ID to remove", "ID is required");
+            a = searchBookByAuthor(auID);
+            b = checkBookByAuthor(auID);
+            System.out.println("----------*******----------");
+            if (a == null) {
+                System.out.println("Couldn't find ID to delete");
+            } else {
+                try {
+                    if(b.getAuthorID().equals(a.getAuthorID()))
+                        System.out.println("Can't delete. There is this ID has in Book ");
+                } catch (Exception e) {
+                    System.out.println("----------Information of Book----------");
+                    String msg = String.format("|%-6s|%-20s|",
+                         "AuthorID", "Name");
+                    System.out.println(msg);
+                    a.showAuthor();
+                    System.out.println();
+                    confirm = CheckValidation.getString("Do you wanna remove this author (Y/N)", "Input is required", "[Y-y|N-n]{1}");
+                    if (confirm.equalsIgnoreCase("Y")) {
                         authorList.remove(a);
                         System.out.println("The selected author is removed sucessfully!!!");
-
                     }
-
                 }
-
             }
-            //          }
-
             s = CheckValidation.getString("Do you wanna continue removing (Y/N)",
                     "Input is required", "[Y-y|N-n]{1}");
         } while (s.equalsIgnoreCase("Y"));
+         
+       
     }
 
     public void findTheBookByTitle() {
@@ -502,6 +519,32 @@ public class BookControl {
             }
 
         } while (choice != 4);
+        
+    }            
+       
+    public void delete(){
+         Menu menu = new Menu(" Delete book and author");
+        menu.addOption("Select the options below:");
+        menu.addOption("1.Delete book");
+        menu.addOption("2.Delete Author");
+        menu.addOption("3.Exit");
+        int choice;
+        do {
+            menu.showMenu();
+            choice = menu.getChoice();
+            switch (choice) {
+                case 1:
+                    removeABook();
+                    break;
+                case 2:
+                    removeAuthorID();
+                    break;
+                case 3:
+                    System.out.println("Thank you!!!!");
+                    break;
+            }
 
+        } while (choice != 3);
     }
+
 }
